@@ -1,6 +1,7 @@
 ﻿using Movies.Contracts;
 using Orleans;
 using Orleans.Providers;
+using System;
 using System.Threading.Tasks;
 
 namespace Movies.Grains
@@ -9,7 +10,12 @@ namespace Movies.Grains
 	public class SampleGrain : Grain<SampleDataModel>, ISampleGrain
 	{
 		public Task<SampleDataModel> Get()
-			=> Task.FromResult(State);
+		{
+			//State.Name = "Some Name";
+			//State.Id = "SomeID";
+			Console.WriteLine(State);
+			return Task.FromResult(State);
+		}
 
 		public Task Set(string name)
 		{
@@ -18,3 +24,4 @@ namespace Movies.Grains
 		}
 	}
 }
+

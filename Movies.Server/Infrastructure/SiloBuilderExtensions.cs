@@ -46,7 +46,7 @@ namespace Movies.Server.Infrastructure
 				{
 					options.ClusterId = appInfo.ClusterId;
 					options.ServiceId = appInfo.Name;
-				});
+				}).AddStartupTask<SeedMovieStoreTask>();
 
 			siloHost.UseDevelopment(context);
 			siloHost.UseDevelopmentClustering(context);
