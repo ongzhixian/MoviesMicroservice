@@ -1,0 +1,38 @@
+<h1>Movie list</h1>
+
+<div style="margin-bottom: .367em; display: inline-block; width: 100%; background-color: lavender; padding: 10px; border-radius: .4em;">
+
+    <div style="display: inline-block; margin-right: 1em; ">
+        <label for="movieName" style="margin-right: .67em;">Movie name</label>
+        <input type="text" pInputText [(ngModel)]="searchTerm" (change)="filterMovies($event)" />
+    </div>
+
+    <div style="display: inline-block;">
+        <p-dropdown [options]="genres" [(ngModel)]="selectedGenre" [showClear]="true" placeholder="Select a genre" (onChange)="filterByGenre($event)"></p-dropdown>    
+    </div>
+
+    <div style="float: right;">
+        <p-button label="Add new movie" [link]="false" routerLink="/movie/add"></p-button>
+    </div>
+
+</div>
+
+<p-table [value]="movies" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Rating</th>
+            <th scope="col"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-movie>
+        <tr>
+            <td>{{ movie.name }}</td>
+            <td>{{ movie.rate }}</td>
+            <td>
+                <p-button label="Edit" [link]="true" [routerLink]="['..', 'movie', 'edit', movie.id]"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+

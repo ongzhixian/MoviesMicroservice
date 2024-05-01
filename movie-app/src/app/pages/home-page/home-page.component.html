@@ -1,0 +1,16 @@
+<h1>Top 5 highest rated movies</h1>
+
+<p-table [value]="movies" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Rating</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-movie>
+        <tr>
+            <td>{{ movie.name }}</td>
+            <td>{{ movie.rate }}</td>
+        </tr>
+    </ng-template>
+</p-table>
