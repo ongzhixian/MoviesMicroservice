@@ -13,16 +13,10 @@ namespace Movies.GrainClients
 			_grainFactory = grainFactory;
 		}
 
-		//public Task<SampleDataModel> Get(string id)
-		//{
-		//	var grain = _grainFactory.GetGrain<ISampleGrain>(id);
-		//	return grain.Get();
-		//}
-
-		public Task Set(string key, string name)
+		public Task Set(MovieDataModel movieDataModel)
 		{
-			var grain = _grainFactory.GetGrain<ISampleGrain>(key);
-			return grain.Set(name);
+			var grain = _grainFactory.GetGrain<IMovieGrain>(movieDataModel.Id);
+			return grain.CreateOrUpdateMovieAsync(movieDataModel);
 		}
 
 		Task<MovieDataModel> IMovieGrainClient.Get(long id)

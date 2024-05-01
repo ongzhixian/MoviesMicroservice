@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 
-namespace Movies.Contracts;
-
-public interface IMovieGrainClient
+namespace Movies.Contracts
 {
-	Task<MovieDataModel> Get(long id);
+	public interface IMovieGrainClient
+	{
+		Task<MovieDataModel> Get(long id);
 
-	Task Set(string key, string name);
+		Task Set(MovieDataModel movieDataModel);
+	}
 }

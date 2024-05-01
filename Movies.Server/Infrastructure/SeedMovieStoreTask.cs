@@ -8,31 +8,37 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Movies.Server.Infrastructure;
-
-internal class SeedMovieStoreTask : IStartupTask
+namespace Movies.Server.Infrastructure
 {
-	private readonly IGrainFactory _grainFactory;
-
-	public SeedMovieStoreTask(IGrainFactory grainFactory) => _grainFactory = grainFactory;
-
-	public async Task Execute(CancellationToken cancellationToken)
+	internal class SeedMovieStoreTask : IStartupTask
 	{
-		var jsonFileData = File.ReadAllText(@"movies.json");
+		private readonly IGrainFactory _grainFactory;
 
-		var dataFile = JsonSerializer.Deserialize<MoviesJsonFileStructure>(jsonFileData);
-		
-		foreach (var movie in dataFile.Movies)
+		public SeedMovieStoreTask(IGrainFactory grainFactory) => _grainFactory = grainFactory;
+
+		public async Task Execute(CancellationToken cancellationToken)
 		{
-			var movieGrain = _grainFactory.GetGrain<IMovieGrain>(movie.Id);
-			
-			await movieGrain.CreateOrUpdateMovieAsync(movie);
-		}
-	}
+			var jsonFileData = File.ReadAllText(@"movies.json");
 
-	private sealed class MoviesJsonFileStructure
-	{
-		[JsonPropertyName("movies")]
-		public MovieDataModel[] Movies { get; set; } = null!;
+			var jsonSerializerOptions = new JsonSerializerOptions
+			{
+				NumberHandling = JsonNumberHandling.AllowReadingFromString
+			};
+
+			var dataFile = JsonSerializer.Deserialize<MoviesJsonFileStructure>(jsonFileData, jsonSerializerOptions);
+		
+			foreach (var movie in dataFile.Movies)
+			{
+				var movieGrain = _grainFactory.GetGrain<IMovieGrain>(movie.Id);
+			
+				await movieGrain.CreateOrUpdateMovieAsync(movie);
+			}
+		}
+
+		private sealed class MoviesJsonFileStructure
+		{
+			[JsonPropertyName("movies")]
+			public MovieDataModel[] Movies { get; set; } = null!;
+		}
 	}
 }

@@ -4,49 +4,26 @@ using Orleans.Providers;
 using System;
 using System.Threading.Tasks;
 
-namespace Movies.Grains;
-
-[StorageProvider(ProviderName = "Default")]
-public class MovieGrain : Grain<MovieDataModel>, IMovieGrain
+namespace Movies.Grains
 {
-
-	public Task CreateOrUpdateMovieAsync(MovieDataModel movie)
+	[StorageProvider(ProviderName = "Default")]
+	public class MovieGrain : Grain<MovieDataModel>, IMovieGrain
 	{
-		State = movie;
-		return Task.CompletedTask;
-	}
+		public Task CreateOrUpdateMovieAsync(MovieDataModel movie) => UpdateState(movie);
 
-	public Task<MovieDataModel> Get()
-	{
-		Console.WriteLine(State);
-		return Task.FromResult(State);
-	}
+		private async Task UpdateState(MovieDataModel movie)
+		{
+			State = movie;
 
-	public Task Set(string name)
-	{
-		State = new MovieDataModel { Id = this.GetPrimaryKeyLong(), Name = name };
-		return Task.CompletedTask;
-	}
+			var movieCompendiumGrain = GrainFactory.GetGrain<IMovieCompendiumGrain>(GrainDirectoryNames.MovieCompendium);
+		
+			await movieCompendiumGrain.AddOrUpdateMovieAsync(movie);
+		}
 
-	private async Task UpdateStateAsync(MovieDataModel movie)
-	{
-		State = movie;
-		//return Task.CompletedTask;
-
-		//var oldCategory = _product.State.Category;
-
-		//_product.State = product;
-		//await _product.WriteStateAsync();
-
-		//var inventoryGrain = GrainFactory.GetGrain<IInventoryGrain>(_product.State.Category.ToString());
-		//await inventoryGrain.AddOrUpdateProductAsync(product);
-
-		//if (oldCategory != product.Category)
-		//{
-		//	// If category changed, remove the product from the old inventory grain.
-		//	var oldInventoryGrain = GrainFactory.GetGrain<IInventoryGrain>(oldCategory.ToString());
-		//	await oldInventoryGrain.RemoveProductAsync(product.Id);
-		//}
+		public Task<MovieDataModel> Get()
+		{
+			Console.WriteLine(State);
+			return Task.FromResult(State);
+		}
 	}
 }
-
