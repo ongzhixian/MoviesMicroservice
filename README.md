@@ -1,10 +1,21 @@
 # Movies Microservice
 
-## Contents
+## Overview
 
-- Features
-- General information about the app
-- Provide steps how to build/launch your application
+Movies indexing application that will have high volumes of traffic. 
+
+## Repository folders structure
+
+Frontend
+
+- movie-app folder -- Angular UI client 
+
+Backend
+
+- Movies.Contracts
+- Movies.GrainClients
+- Movies.Grains
+- Movies.Server
 
 ## Features
 
@@ -27,6 +38,23 @@
   
 
 ## Build/Launch
+
+To run the backend, run the command `dotnet run` in the repository base folder.
+
+To run the frontend, run the following commands from within the `movie-app` folder:
+1.  run the command `npm install` (to install dependencies)
+2.  run the command `npm start`   (to run the application)
+
+In your browser, navigate to `http://localhost:4200/movies`
+
+
+## To contribute
+
+1.  The backend are using deprecated libraries.
+2.  Upgrade Orleans (currently at Orleans 3) 
+3.  Add unit tests
+4.  Add Dockerfiles for containerization.
+5.  Fix bugs
 
 
 ## Troubleshooting build/launch
