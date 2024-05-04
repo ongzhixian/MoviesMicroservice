@@ -1,6 +1,4 @@
 {
-  "__NOTE__": "DO NOT MODIFY THESE MANUALLY! Auto-generated during CI!",
-  "appName": "@rivertech/movies",
-  "gitCommit": "-",
-  "version": "local"
+  "appName": "movies-microservice",
+  "gitRepositoryUrl": "https://github.com/ongzhixian/MoviesMicroservice"
 }
