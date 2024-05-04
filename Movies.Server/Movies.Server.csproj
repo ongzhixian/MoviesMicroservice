@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="..\app-info.json" Link="app-info.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -60,9 +66,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="app-info.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Update="appsettings.dev.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
