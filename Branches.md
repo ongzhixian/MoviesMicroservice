@@ -2,6 +2,13 @@
 
 Describes how we branch work in this repository.
 
+Contents
+
+1.  Overview of deployment strategy
+2.  The main branch
+3.  Branch groups
+4.  Branch naming convention
+5.  Development
 
 ## Overview of deployment strategy
 
@@ -71,5 +78,14 @@ release/movie-v1-secure
 release/movie-v2
 ```
 
+## Development strategy
 
-# Notes
+Development work should be release-oriented.
+That is to say, whatever work we are doing, we should know which release its intended for.
+
+Hence to develop a new feature or bugfix, first decide which release is the new code going to go to first.
+
+For example, I decide to work on a feature call `use-adonet-provider` for the `movie-v1`
+I would create a branch `feature/movie-v1/use-adonet-provider`
+I would do all work on this branch.
+When I'm done, I would merge this code into the `release/movie-v1` branch.
